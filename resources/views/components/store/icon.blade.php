@@ -5,6 +5,7 @@
         @case('menu') <path d="M4 6h16M4 12h16M4 18h16"/> @break
         @case('filter') <path d="M3 4h18l-7 8v6l-4 2v-8z"/> @break
         @case('shirt') <path d="m8 4-5 3 2 5 3-1v9h8v-9l3 1 2-5-5-3a4 4 0 0 1-8 0Z"/> @break
+        @case('package') <path d="M3 7l9-4 9 4v10l-9 4-9-4zM3 7l9 4 9-4m-9 4v10M7.5 5l9 4"/> @break
         @case('bag') <path d="M5 8h14l2 13H3zM8 9V6a4 4 0 0 1 8 0v3"/> @break
         @case('bottle') <path d="M9 3h6v4l3 4v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-8l3-4zM7 12h10M7 17h10"/> @break
         @case('book') <rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v18m3-13h4m-4 4h4"/> @break

@@ -69,7 +69,7 @@ if (product) {
 
         price.textContent = 'Rp' + format.format(Number(option.dataset.price));
         if (!variants.form.hasAttribute('data-preorder')) {
-            stock.textContent = option.value ? format.format(units) + ' unit tersedia' : initialStock;
+            stock.textContent = option.value ? 'Tersedia (' + format.format(units) + ' unit)' : initialStock;
         }
         quantity.disabled = units < 1;
         addButton.disabled = units < 1;

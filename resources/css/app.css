@@ -415,7 +415,7 @@
     .market-product-facts a { @apply font-semibold hover:underline; }
     .store-detail .store-options { @apply gap-4 rounded-none bg-transparent p-0 sm:col-span-2; }
     .store-detail .store-button-gold:not(:disabled) { @apply bg-[#ffc400] text-[#082554] hover:bg-amber-300; }
-    .market-cart-link { @apply border border-green-700 text-green-800 hover:bg-green-50; }
+    .market-cart-link { @apply border border-green-700 bg-white text-green-800 hover:bg-green-50; }
     .store-description { @apply mt-6 rounded-none border-x-0 border-b-0 px-0 sm:px-0; }
     .store-description h2 { @apply border-b-3; }
 }
@@ -608,4 +608,17 @@
         visibility: hidden;
         pointer-events: none;
     }
+}
+
+@layer components {
+    .detail-status-badge {
+        @apply w-fit rounded-full bg-[#ffc400] px-3 py-1 text-sm font-bold text-[#082554];
+    }
+    .store-detail-info .store-detail-price {
+        @apply mt-1 text-3xl tracking-tight text-[#082554] sm:text-4xl;
+    }
+    .store-detail-info .market-product-facts { @apply mt-3 bg-slate-100 p-3 sm:p-4; }
+    .detail-fact { @apply flex items-start gap-2.5 wrap-anywhere; }
+    .detail-fact svg { @apply size-5; }
+    .detail-stock { @apply font-semibold; }
 }

@@ -51,7 +51,9 @@
             </div>
             <div class="store-detail-info">
                 @if ($product->is_preorder)
-                    <span class="store-po">Pre-order (PO)</span>
+                    <span class="store-po detail-status-badge">Pre-order (PO)</span>
+                @elseif ($product->is_featured)
+                    <span class="detail-status-badge">Unggulan</span>
                 @endif
                 <h1>{{ $product->name }}</h1>
                 <p class="store-detail-price" data-product-price aria-live="polite">Rp{{ number_format($product->starting_price, 0, ',', '.') }}</p>
@@ -59,18 +61,25 @@
                 @php($hasDimensions = $product->variants->count() > 1 && $product->variants->every(fn ($option) => filled($option->size) && filled($option->color)))
                 @php($canOrder = $product->variants->isNotEmpty() && ($product->is_preorder || $product->variants_sum_stock > 0))
                 <div class="market-product-facts">
-                    <p data-product-stock aria-live="polite">
-                        @if ($product->is_preorder && $canOrder)
-                            Estimasi siap {{ $product->preorder_estimate }}
-                        @elseif ($variant && $variant->stock > 0)
-                            {{ number_format($variant->stock, 0, ',', '.') }} unit tersedia
-                        @elseif (!$product->variants_sum_stock)
-                            Stok habis
-                        @else
-                            {{ number_format($product->variants_sum_stock, 0, ',', '.') }} unit tersedia di semua varian.
-                        @endif
+                    <p class="detail-fact">
+                        <x-store.icon name="package" />
+                        <span>
+                            <strong>{{ $product->is_preorder ? 'Pre-order' : 'Stok' }}:</strong>
+                            <span data-product-stock aria-live="polite" class="detail-stock {{ !$product->is_preorder && $product->variants_sum_stock > 0 ? 'text-green-800' : '' }}">
+                                @if ($product->is_preorder && $canOrder)
+                                    Estimasi siap {{ $product->preorder_estimate }}
+                                @elseif (!$product->variants_sum_stock)
+                                    Stok habis
+                                @else
+                                    Tersedia ({{ number_format($variant?->stock ?? $product->variants_sum_stock, 0, ',', '.') }} unit)
+                                @endif
+                            </span>
+                        </span>
                     </p>
-                    <p>Kategori <a href="{{ route('store.category', $product->category->slug) }}">{{ $product->category->name }}</a></p>
+                    <p class="detail-fact">
+                        <x-store.icon name="shirt" />
+                        <span><strong>Kategori:</strong> <a href="{{ route('store.category', $product->category->slug) }}">{{ $product->category->name }}</a></span>
+                    </p>
                 </div>
             </div>
                 <form @if ($product->is_preorder) data-preorder @endif method="POST" action="{{ route('store.cart.store') }}" class="store-options">
@@ -132,8 +141,14 @@
                             <button type="button" data-quantity-step="1" aria-label="Tambah jumlah" hidden>+</button>
                         </div>
                     </div>
-                    <button class="store-button store-button-gold" type="submit" data-product-add @disabled(!$canOrder)><x-store.cart-icon /> Tambah ke keranjang</button>
-                    <a class="store-button market-cart-link" href="{{ route('store.cart.index') }}">Lihat keranjang untuk pesan via WhatsApp</a>
+                    <div class="grid gap-2">
+                        <button class="store-button store-button-gold" type="submit" data-product-add @disabled(!$canOrder)>
+                            <x-store.cart-icon /> Masukkan ke Keranjang
+                        </button>
+                        <a class="store-button market-cart-link" href="{{ route('store.cart.index') }}" aria-label="Pesan via WhatsApp melalui keranjang">
+                            <x-store.icon name="chat" /> Pesan via WhatsApp
+                        </a>
+                    </div>
                 </form>
         </article>
 
